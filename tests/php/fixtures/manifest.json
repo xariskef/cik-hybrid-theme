@@ -1,0 +1,33 @@
+{
+  "_client-Xy12.js": {
+    "file": "assets/client-Xy12.js",
+    "name": "client",
+    "imports": ["_react-Rr34.js"],
+    "css": ["assets/shared-Sh56.css"]
+  },
+  "_react-Rr34.js": {
+    "file": "assets/react-Rr34.js",
+    "name": "react"
+  },
+  "src/css/app.css": {
+    "file": "assets/app-D1x2.css",
+    "src": "src/css/app.css",
+    "isEntry": true
+  },
+  "src/islands/Slider.tsx": {
+    "file": "assets/Slider-Sl78.js",
+    "name": "Slider",
+    "src": "src/islands/Slider.tsx",
+    "isDynamicEntry": true,
+    "imports": ["_client-Xy12.js"]
+  },
+  "src/js/islands.ts": {
+    "file": "assets/islands-Ab90.js",
+    "name": "islands",
+    "src": "src/js/islands.ts",
+    "isEntry": true,
+    "imports": ["_client-Xy12.js"],
+    "dynamicImports": ["src/islands/Slider.tsx"],
+    "css": ["assets/islands-Cc11.css"]
+  }
+}

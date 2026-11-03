@@ -8,6 +8,8 @@
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/dist/*</exclude-pattern>
 	<exclude-pattern>/src/*</exclude-pattern>
+	<!-- Tests follow PHPUnit conventions (PSR-4 class files, camelCase API) and never ship in the theme zip. -->
+	<exclude-pattern>/tests/*</exclude-pattern>
 	<exclude-pattern>*.js</exclude-pattern>
 	<exclude-pattern>*.css</exclude-pattern>
 

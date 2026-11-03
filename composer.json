@@ -1,6 +1,6 @@
 {
   "name": "cikefallinos/cik-hybrid-theme",
-  "description": "Kefallinos Hybrid WordPress theme (coding standards tooling).",
+  "description": "Kefallinos Hybrid WordPress theme (coding standards and test tooling).",
   "type": "wordpress-theme",
   "license": "proprietary",
   "authors": [
@@ -13,18 +13,29 @@
     "php": ">=8.1"
   },
   "require-dev": {
+    "brain/monkey": "^2.6",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "phpunit/phpunit": "^9.6",
     "wp-coding-standards/wpcs": "^3.1"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CikHybrid\\Tests\\": "tests/php/"
+    }
   },
   "scripts": {
     "lint": "phpcs",
-    "lint:fix": "phpcbf"
+    "lint:fix": "phpcbf",
+    "test": "phpunit"
   },
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     },
-    "sort-packages": true
+    "sort-packages": true,
+    "platform": {
+      "php": "8.1.0"
+    }
   }
 }

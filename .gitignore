@@ -5,6 +5,13 @@ vendor/
 # Build output (built in CI / release zip)
 dist/
 
+# Test output
+.phpunit.result.cache
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
 # Vite dev server marker (written by vite.config.ts while `pnpm dev` runs)
 hot
 
