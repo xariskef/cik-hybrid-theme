@@ -5,7 +5,7 @@
     "appearanceTools": true,
     "layout": {
       "contentSize": "44rem",
-      "wideSize": "72rem"
+      "wideSize": "76rem"
     },
     "color": {
       "defaultPalette": false,
@@ -19,8 +19,15 @@
         { "slug": "muted", "name": "Muted", "color": "#545b68" },
         { "slug": "line", "name": "Line", "color": "#dfe2e8" },
         { "slug": "brand", "name": "Brand", "color": "#0088cc" },
+        { "slug": "brand-tint", "name": "Brand tint", "color": "#e6f4fb" },
+        { "slug": "brand-bright", "name": "Brand bright (on dark)", "color": "#1ba3e6" },
         { "slug": "accent", "name": "Accent", "color": "#006fa6" },
-        { "slug": "accent-strong", "name": "Accent strong", "color": "#004f78" }
+        { "slug": "accent-strong", "name": "Accent strong", "color": "#004f78" },
+        { "slug": "night", "name": "Night", "color": "#0a0a0b" },
+        { "slug": "night-card", "name": "Night card", "color": "#111113" },
+        { "slug": "night-line", "name": "Night line", "color": "#2a2a30" },
+        { "slug": "night-ink", "name": "Night ink", "color": "#f5f5f3" },
+        { "slug": "night-muted", "name": "Night muted", "color": "#9d9da6" }
       ]
     },
     "typography": {
@@ -29,8 +36,13 @@
       "fontFamilies": [
         {
           "slug": "sans",
-          "name": "System sans",
-          "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
+          "name": "Inter",
+          "fontFamily": "\"Inter Variable\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif"
+        },
+        {
+          "slug": "display",
+          "name": "Bricolage Grotesque",
+          "fontFamily": "\"Bricolage Grotesque Variable\", \"Inter Variable\", ui-sans-serif, system-ui, sans-serif"
         },
         {
           "slug": "mono",
