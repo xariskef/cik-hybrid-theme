@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Mirrored in theme.json (palette, font sizes, spacing, layout)
+ * so the block editor and the front end share one vocabulary. Keep both in sync.
+ */
+@theme {
+  --color-base: #ffffff;
+  --color-surface: #f5f6f8;
+  --color-ink: #15171c;
+  --color-muted: #545b68;
+  --color-line: #dfe2e8;
+  --color-accent: #1d4ed8;
+  --color-accent-strong: #1e3a8a;
+  --color-accent-ink: #ffffff;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --container-content: 44rem;
+  --container-wide: 72rem;
+
+  --radius-card: 0.75rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-base font-sans text-ink antialiased;
+  }
+
+  a {
+    @apply text-accent underline-offset-4 hover:text-accent-strong;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}
+
+@layer components {
+  .cik-container {
+    @apply mx-auto w-full max-w-wide px-4 sm:px-6;
+  }
+
+  .cik-skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-base focus:no-underline;
+  }
+
+  /* Long-form content produced by the editor (the_content, comments). */
+  .cik-prose {
+    @apply text-lg leading-relaxed;
+
+    & > * {
+      @apply mx-auto max-w-content;
+    }
+
+    & > .alignwide {
+      @apply max-w-wide;
+    }
+
+    & > .alignfull {
+      @apply max-w-none;
+    }
+
+    & > * + * {
+      @apply mt-6;
+    }
+
+    & h2 {
+      @apply mt-12 text-3xl font-bold tracking-tight;
+    }
+
+    & h3 {
+      @apply mt-10 text-2xl font-semibold;
+    }
+
+    & h4 {
+      @apply mt-8 text-xl font-semibold;
+    }
+
+    & a {
+      @apply underline;
+    }
+
+    & ul {
+      @apply list-disc pl-6;
+    }
+
+    & ol {
+      @apply list-decimal pl-6;
+    }
+
+    & li + li {
+      @apply mt-2;
+    }
+
+    & blockquote {
+      @apply border-l-4 border-accent pl-5 italic text-muted;
+    }
+
+    & pre {
+      @apply overflow-x-auto rounded-card bg-ink p-4 font-mono text-sm text-base;
+    }
+
+    & :not(pre) > code {
+      @apply rounded bg-surface px-1.5 py-0.5 font-mono text-[0.9em];
+    }
+
+    & img,
+    & video,
+    & iframe {
+      @apply h-auto max-w-full rounded-card;
+    }
+
+    & figcaption {
+      @apply mt-2 text-center text-sm text-muted;
+    }
+
+    & table {
+      @apply w-full border-collapse text-left text-base;
+    }
+
+    & th,
+    & td {
+      @apply border border-line px-3 py-2;
+    }
+
+    & .aligncenter {
+      @apply mx-auto;
+    }
+
+    & .alignleft {
+      @apply float-left mr-6 mb-4;
+    }
+
+    & .alignright {
+      @apply float-right mb-4 ml-6;
+    }
+  }
+
+  /* Header navigation (markup from Cik_Hybrid_Walker_Nav). */
+  .cik-menu {
+    @apply flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-2;
+  }
+
+  .cik-menu a {
+    @apply block rounded-md px-3 py-2 font-medium text-ink no-underline hover:bg-surface hover:text-accent;
+  }
+
+  .cik-menu .current-menu-item > .cik-menu__row > a,
+  .cik-menu .current-menu-ancestor > .cik-menu__row > a {
+    @apply text-accent;
+  }
+
+  .cik-menu__row {
+    @apply flex items-center;
+  }
+
+  .cik-menu__toggle {
+    @apply inline-flex size-9 items-center justify-center rounded-md text-muted hover:bg-surface hover:text-ink;
+  }
+
+  .cik-menu__toggle svg {
+    @apply transition-transform;
+  }
+
+  .cik-menu__toggle[aria-expanded="true"] svg {
+    @apply rotate-180;
+  }
+
+  .cik-menu .sub-menu {
+    @apply ml-4 border-l border-line pl-2 lg:absolute lg:top-full lg:left-0 lg:z-40 lg:ml-0 lg:min-w-56 lg:rounded-card lg:border lg:bg-base lg:p-2 lg:shadow-lg;
+  }
+
+  .cik-menu .sub-menu .sub-menu {
+    @apply lg:top-0 lg:left-full;
+  }
+
+  .cik-menu .menu-item {
+    @apply relative;
+  }
+
+  .cik-menu .sub-menu[hidden] {
+    display: none;
+  }
+}

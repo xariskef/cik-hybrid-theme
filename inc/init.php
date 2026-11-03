@@ -6,3 +6,5 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+require_once CIK_HYBRID_INC_DIR . '/setup/assets.php';
