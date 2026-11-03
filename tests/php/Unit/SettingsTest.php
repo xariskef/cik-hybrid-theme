@@ -158,10 +158,10 @@ final class SettingsTest extends TestCase {
 	public function test_customizer_registers_every_field_with_a_type_specific_sanitizer(): void {
 		$manager = Mockery::mock( 'WP_Customize_Manager' );
 		$manager->expects( 'add_section' )->once()->with( 'cik_hybrid_settings', Mockery::type( 'array' ) );
-		$manager->expects( 'add_control' )->times( 5 );
+		$manager->expects( 'add_control' )->times( 6 );
 
 		$callbacks = array();
-		$manager->expects( 'add_setting' )->times( 5 )->andReturnUsing(
+		$manager->expects( 'add_setting' )->times( 6 )->andReturnUsing(
 			static function ( string $id, array $args ) use ( &$callbacks ): void {
 				$callbacks[ $id ] = $args['sanitize_callback'];
 			}
@@ -172,6 +172,7 @@ final class SettingsTest extends TestCase {
 		$this->assertSame(
 			array(
 				'cik_hybrid_show_site_name'   => 'cik_hybrid_sanitize_checkbox_setting',
+				'cik_hybrid_disable_comments' => 'cik_hybrid_sanitize_checkbox_setting',
 				'cik_hybrid_social_facebook'  => 'cik_hybrid_sanitize_url_setting',
 				'cik_hybrid_social_instagram' => 'cik_hybrid_sanitize_url_setting',
 				'cik_hybrid_social_linkedin'  => 'cik_hybrid_sanitize_url_setting',

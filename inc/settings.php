@@ -25,6 +25,11 @@ function cik_hybrid_setting_fields(): array {
 			'type'    => 'checkbox',
 			'default' => '1',
 		),
+		'disable_comments' => array(
+			'label'   => __( 'Disable comments', 'cik-hybrid' ),
+			'type'    => 'checkbox',
+			'default' => '1',
+		),
 		'social_facebook'  => array(
 			'label' => __( 'Facebook URL', 'cik-hybrid' ),
 			'type'  => 'url',

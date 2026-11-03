@@ -133,6 +133,22 @@ test.describe('templates', () => {
   });
 });
 
+test.describe('comments (disabled by the default theme setting)', () => {
+  test('a post has no comment form', async ({ page, request }) => {
+    const link = await firstLink(request, 'posts?per_page=1');
+    expect(link, 'a published post').not.toBeNull();
+
+    await expectHealthyPage(page, await visit(page, link!));
+    await expect(page.locator('#commentform, #respond')).toHaveCount(0);
+  });
+
+  test('the comments REST route is gone', async ({ request }) => {
+    const response = await request.get('/?rest_route=/wp/v2/comments');
+    expect(response.status()).toBe(404);
+    expect(((await response.json()) as { code: string }).code).toBe('rest_no_route');
+  });
+});
+
 test.describe('mobile navigation', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
