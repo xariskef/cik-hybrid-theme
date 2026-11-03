@@ -95,7 +95,7 @@ function cik_hybrid_enqueue_vite_entry( string $entry ): bool {
 
 	// Filenames carry a content hash, so a ?ver= query string would add nothing: pass null.
 	if ( str_ends_with( $chunk['file'], '.css' ) ) {
-		wp_enqueue_style( 'cik-hybrid-' . sanitize_key( basename( $entry, '.css' ) ), $base . $chunk['file'], array(), null );
+		wp_enqueue_style( 'cik-hybrid-' . sanitize_key( basename( $entry, '.css' ) ), $base . $chunk['file'], array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Hashed filename.
 		return true;
 	}
 
@@ -107,7 +107,7 @@ function cik_hybrid_enqueue_vite_entry( string $entry ): bool {
 	);
 
 	foreach ( cik_hybrid_collect_vite_css( $entry, $manifest ) as $css_file ) {
-		wp_enqueue_style( 'cik-hybrid-' . sanitize_key( $css_file ), $base . $css_file, array(), null );
+		wp_enqueue_style( 'cik-hybrid-' . sanitize_key( $css_file ), $base . $css_file, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Hashed filename.
 	}
 
 	return true;

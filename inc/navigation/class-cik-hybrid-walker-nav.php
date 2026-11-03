@@ -86,38 +86,38 @@ class Cik_Hybrid_Walker_Nav extends Walker_Nav_Menu {
 			. $button
 			. '</div>';
 	}
-}
 
-/**
- * Fallback for the primary location when no menu is assigned: top-level pages.
- *
- * @param array<string, mixed> $args wp_nav_menu() arguments.
- */
-function cik_hybrid_primary_menu_fallback( array $args ): void {
-	$pages = get_pages(
-		array(
-			'parent'       => 0,
-			'hierarchical' => false,
-			'number'       => 6,
-			'sort_column'  => 'menu_order,post_title',
-		)
-	);
+	/**
+	 * Fallback for the primary location when no menu is assigned: top-level pages.
+	 *
+	 * @param array<string, mixed> $args wp_nav_menu() arguments.
+	 */
+	public static function fallback( array $args ): void {
+		$pages = get_pages(
+			array(
+				'parent'       => 0,
+				'hierarchical' => false,
+				'number'       => 6,
+				'sort_column'  => 'menu_order,post_title',
+			)
+		);
 
-	echo '<ul class="' . esc_attr( $args['menu_class'] ?? 'cik-menu' ) . '">';
-	printf(
-		'<li class="menu-item"><a href="%s">%s</a></li>',
-		esc_url( home_url( '/' ) ),
-		esc_html__( 'Home', 'cik-hybrid' )
-	);
-	foreach ( $pages as $page ) {
-		if ( (int) get_option( 'page_on_front' ) === $page->ID ) {
-			continue;
-		}
+		echo '<ul class="' . esc_attr( $args['menu_class'] ?? 'cik-menu' ) . '">';
 		printf(
 			'<li class="menu-item"><a href="%s">%s</a></li>',
-			esc_url( get_permalink( $page ) ),
-			esc_html( get_the_title( $page ) )
+			esc_url( home_url( '/' ) ),
+			esc_html__( 'Home', 'cik-hybrid' )
 		);
+		foreach ( $pages as $page ) {
+			if ( (int) get_option( 'page_on_front' ) === $page->ID ) {
+				continue;
+			}
+			printf(
+				'<li class="menu-item"><a href="%s">%s</a></li>',
+				esc_url( get_permalink( $page ) ),
+				esc_html( get_the_title( $page ) )
+			);
+		}
+		echo '</ul>';
 	}
-	echo '</ul>';
 }

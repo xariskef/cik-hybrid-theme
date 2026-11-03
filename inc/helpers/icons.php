@@ -17,19 +17,19 @@ defined( 'ABSPATH' ) || exit;
  */
 function cik_hybrid_icon_paths(): array {
 	$paths = array(
-		'arrow-right'  => 'M5 12h14M13 6l6 6-6 6',
-		'cart'         => 'M3 4h2l2.4 10.2a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.8L20 8H6.2M9 20h.01M17 20h.01',
-		'chevron-down' => 'M6 9l6 6 6-6',
-		'chevron-left' => 'M15 6l-6 6 6 6',
+		'arrow-right'   => 'M5 12h14M13 6l6 6-6 6',
+		'cart'          => 'M3 4h2l2.4 10.2a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.8L20 8H6.2M9 20h.01M17 20h.01',
+		'chevron-down'  => 'M6 9l6 6 6-6',
+		'chevron-left'  => 'M15 6l-6 6 6 6',
 		'chevron-right' => 'M9 6l6 6-6 6',
-		'close'        => 'M6 6l12 12M18 6L6 18',
-		'facebook'     => 'M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v6h4v-6h3l1-4h-4V8z',
-		'instagram'    => 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zM16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4zM17.5 6.5h.01',
-		'linkedin'     => 'M6 9v12M6 4.5v.01M10 21v-7a3 3 0 0 1 6 0v7M10 12V9',
-		'menu'         => 'M4 7h16M4 12h16M4 17h16',
-		'pause'        => 'M8 5v14M16 5v14',
-		'play'         => 'M7 5l12 7-12 7V5z',
-		'search'       => 'M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM20 20l-4-4',
+		'close'         => 'M6 6l12 12M18 6L6 18',
+		'facebook'      => 'M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v6h4v-6h3l1-4h-4V8z',
+		'instagram'     => 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zM16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4zM17.5 6.5h.01',
+		'linkedin'      => 'M6 9v12M6 4.5v.01M10 21v-7a3 3 0 0 1 6 0v7M10 12V9',
+		'menu'          => 'M4 7h16M4 12h16M4 17h16',
+		'pause'         => 'M8 5v14M16 5v14',
+		'play'          => 'M7 5l12 7-12 7V5z',
+		'search'        => 'M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM20 20l-4-4',
 	);
 
 	/**

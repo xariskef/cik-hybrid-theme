@@ -156,6 +156,22 @@
     }
   }
 
+  .cik-pagination .nav-links {
+    @apply flex flex-wrap items-center justify-center gap-2;
+  }
+
+  .cik-pagination .page-numbers {
+    @apply inline-flex min-w-10 items-center justify-center gap-1 rounded-md border border-line px-3 py-2 font-medium text-ink no-underline hover:border-accent hover:text-accent;
+  }
+
+  .cik-pagination .page-numbers.current {
+    @apply border-accent bg-accent text-accent-ink;
+  }
+
+  .cik-pagination .page-numbers.dots {
+    @apply border-transparent;
+  }
+
   /* Header navigation (markup from Cik_Hybrid_Walker_Nav). */
   .cik-menu {
     @apply flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-2;
