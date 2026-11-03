@@ -50,6 +50,14 @@
     @apply text-accent underline-offset-4 hover:text-accent-strong;
   }
 
+  :where(input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"]), textarea, select) {
+    @apply w-full rounded-md border border-line bg-base px-3 py-2;
+  }
+
+  :where(label) {
+    @apply font-medium;
+  }
+
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-accent;
   }
