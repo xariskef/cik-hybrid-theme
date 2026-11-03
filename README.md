@@ -25,12 +25,13 @@ mirrors the design tokens so the block editor matches the front end.
 - Accessible navigation: dropdown toggles with `aria-expanded`, mobile menu, Escape handling, no-JS fallback.
 - WooCommerce support (when active): page wrappers, header cart count via cart fragments, product card.
 - Theme settings (social links, footer text) from an ACF options page when available, otherwise the Customizer.
-- PHPCS (WordPress Coding Standards) and a GitHub Actions workflow that also builds a release zip on tags.
+- PHPCS (WordPress Coding Standards), PHPUnit + Brain Monkey, Vitest and Playwright/wp-env test suites, and a
+  GitHub Actions workflow that also builds a release zip on tags.
 
 ## Requirements
 
 - WordPress 6.5+ (uses the Script Modules API), PHP 8.1+
-- For development: Node 20+, pnpm 10, Composer (or Docker) for PHPCS
+- For development: Node 20+, pnpm 10, Composer (or Docker) for PHPCS and PHPUnit, Docker for wp-env
 
 ## Installation
 
@@ -45,7 +46,7 @@ git clone <repo-url> cik-hybrid-theme
 cd cik-hybrid-theme
 pnpm install
 pnpm build
-composer install   # only needed for PHPCS
+composer install   # only needed for PHPCS and PHPUnit
 ```
 
 ## Development
@@ -58,6 +59,38 @@ vendor/bin/phpcs
 ```
 
 While `pnpm dev` runs, the theme loads assets from the dev server; stop it and the theme falls back to `dist/`.
+
+## Testing
+
+Three layers, each answering a different question:
+
+| Suite | Tool | What it covers | Command |
+| --- | --- | --- | --- |
+| PHP unit | PHPUnit 9 + Brain Monkey | Vite hot file/manifest resolution, islands markup, settings (ACF or Customizer), block attribute validation, components. No WordPress, no database. | `composer test` |
+| JS unit | Vitest + Testing Library (jsdom) | Islands loader, `Slider` (URL filtering, autoplay, reduced motion, inert slides), `Tabs` (keyboard, ARIA), URL helpers. | `pnpm test` |
+| End to end | Playwright + wp-env | The latest WordPress with WooCommerce: every main template returns the right status without PHP notices or console errors, islands mount, the mobile menu works with the keyboard. | `pnpm test:e2e` |
+
+```bash
+composer install && composer test            # or with Docker:
+docker run --rm -v "$PWD:/app" -w /app composer:2 sh -c "composer install && composer test"
+
+pnpm test                                    # vitest run; pnpm test:watch while working
+
+pnpm build                                   # e2e runs against the built theme
+pnpm env:start                               # wp-env on http://127.0.0.1:8888, seeded by tests/e2e/seed.sh
+pnpm exec playwright install chromium        # once
+pnpm test:e2e
+pnpm env:stop
+```
+
+To run the smoke suite against another WordPress where the theme is active, set `WP_BASE_URL`
+(e.g. `WP_BASE_URL=http://127.0.0.1:8089 pnpm test:e2e`). It looks up a post, the `about` page and a category
+through the REST API; the latest-posts and shop checks are skipped, with a reason, when that content or
+WooCommerce is missing.
+
+Brain Monkey replaces WordPress functions per test, which keeps the PHP suite fast and focused on the theme's own
+logic; what WordPress itself does with the values (escaping, queries, rendering) is covered by the e2e suite.
+`tests/` is excluded from PHPCS: test classes follow PHPUnit conventions and are not shipped in the theme zip.
 
 ## Architecture
 
@@ -189,7 +222,8 @@ vite.config.ts         build config and hot-file plugin
 - `phpcs.xml.dist` uses the WordPress ruleset and PHPCompatibilityWP (PHP 8.1+), text domain `cik-hybrid`,
   prefixes `cik_hybrid` / `CIK_HYBRID`.
 - TypeScript runs in strict mode (`noUncheckedIndexedAccess` included).
-- `.github/workflows/ci.yml` runs `php -l` and PHPCS on PHP 8.1, then `pnpm typecheck` and `pnpm build`. On a
+- `.github/workflows/ci.yml` runs `php -l`, PHPCS and PHPUnit on PHP 8.1 and 8.3; `pnpm typecheck`, `pnpm test`
+  and `pnpm build`; then the Playwright suite on wp-env with the built assets (report uploaded on failure). On a
   `v*` tag it packages the theme with `git archive` (dev files are `export-ignore`d) plus the built `dist/` and
   attaches the zip to a GitHub release.
 

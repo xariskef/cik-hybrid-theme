@@ -33,9 +33,23 @@ React islands. Read `README.md` for the architecture.
 pnpm dev          # dev server, writes ./hot
 pnpm build        # dist/ + manifest
 pnpm typecheck
+pnpm test         # Vitest (tests/js)
 composer install
 vendor/bin/phpcs  # vendor/bin/phpcbf fixes formatting
+composer test     # PHPUnit + Brain Monkey (tests/php), no WordPress needed
+pnpm env:start    # wp-env on http://127.0.0.1:8888, seeded by tests/e2e/seed.sh (needs pnpm build)
+pnpm test:e2e     # Playwright smoke suite; WP_BASE_URL=... for another site
+pnpm env:stop
 ```
+
+## Tests
+
+- PHP: `tests/php/Unit/*Test.php`, extend `CikHybrid\Tests\TestCase` (sets up Brain Monkey). Stub WordPress
+  functions per test; theme functions can be stubbed too (Patchwork is loaded before the theme files). Code that
+  keeps state in a `static` or depends on `function_exists()` needs `@runInSeparateProcess`.
+- JS: `tests/js/*.test.ts(x)`, Testing Library queries by role/label; `mockMatchMedia()` in `tests/js/helpers.ts`.
+- E2E: `tests/e2e/smoke.spec.ts`; content it needs is created by `tests/e2e/seed.sh` (idempotent).
+- New logic in `inc/` gets a unit test; a new template or island gets a line in the smoke suite.
 
 ## Adding things
 
@@ -47,7 +61,7 @@ vendor/bin/phpcs  # vendor/bin/phpcbf fixes formatting
 ## Definition of done
 
 - `vendor/bin/phpcs` reports no errors or warnings.
-- `pnpm typecheck` and `pnpm build` pass.
+- `pnpm typecheck`, `pnpm test`, `composer test` and `pnpm build` pass; `pnpm test:e2e` when templates changed.
 - No debug output (`var_dump`, `error_log`, `console.log`) left in the code.
 - All strings translatable with the `cik-hybrid` text domain; output escaped.
 - Checked in a browser with and without JavaScript where behaviour changed.
