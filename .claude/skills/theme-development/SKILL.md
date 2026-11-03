@@ -66,8 +66,9 @@ nav walker `inc/navigation/`, WooCommerce `inc/woocommerce.php`.
    the attribute sanitising.
 
 ### Add a setting
-1. Add one entry to `cik_hybrid_setting_fields()` in `inc/settings.php` (`label` + `type`: `text`, `textarea`
-   or `url`). That single definition feeds both the ACF options page and the Customizer.
+1. Add one entry to `cik_hybrid_setting_fields()` in `inc/settings.php` (`label` + `type`: `text`, `textarea`,
+   `url` or `checkbox`, optional `default`). That single definition feeds both the ACF options page and the
+   Customizer. Checkboxes read as `'1'`/`'0'`; an unsaved field returns its `default`.
 2. If you need a new type, extend `cik_hybrid_sanitize_setting()` — values are sanitised on read as well.
 3. Read it only through `cik_hybrid_setting( $key, $default )`.
 

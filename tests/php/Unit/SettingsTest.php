@@ -110,6 +110,45 @@ final class SettingsTest extends TestCase {
 		$this->assertSame( 'fallback', cik_hybrid_setting( 'social_facebook', 'fallback' ) );
 	}
 
+	/**
+	 * @dataProvider checkbox_values
+	 *
+	 * @param mixed  $raw      Stored value.
+	 * @param string $expected Sanitised value.
+	 */
+	public function test_checkbox_values_are_normalised( $raw, string $expected ): void {
+		$this->assertSame( $expected, cik_hybrid_sanitize_setting( $raw, 'checkbox' ) );
+	}
+
+	public static function checkbox_values(): array {
+		return array(
+			'never saved'          => array( null, '' ),
+			'empty theme mod'      => array( '', '' ),
+			'ACF true'             => array( true, '1' ),
+			'ACF false'            => array( false, '0' ),
+			'customizer on'        => array( '1', '1' ),
+			'customizer off'       => array( '0', '0' ),
+			'unexpected string'    => array( '<b>yes</b>', '0' ),
+			'non-scalar'           => array( array( 1 ), '0' ),
+		);
+	}
+
+	public function test_customizer_checkbox_saves_unchecked_as_zero(): void {
+		$this->assertSame( '0', cik_hybrid_sanitize_checkbox_setting( false ) );
+		$this->assertSame( '0', cik_hybrid_sanitize_checkbox_setting( '' ) );
+		$this->assertSame( '1', cik_hybrid_sanitize_checkbox_setting( true ) );
+	}
+
+	public function test_unsaved_checkbox_falls_back_to_the_field_default(): void {
+		Functions\when( 'get_theme_mod' )->justReturn( '' );
+		$this->assertSame( '1', cik_hybrid_setting( 'show_site_name' ) );
+	}
+
+	public function test_unchecked_checkbox_is_not_replaced_by_the_default(): void {
+		Functions\when( 'get_theme_mod' )->justReturn( '0' );
+		$this->assertSame( '0', cik_hybrid_setting( 'show_site_name' ) );
+	}
+
 	public function test_unknown_keys_return_the_default_without_reading_anything(): void {
 		Functions\expect( 'get_theme_mod' )->never();
 
@@ -119,10 +158,10 @@ final class SettingsTest extends TestCase {
 	public function test_customizer_registers_every_field_with_a_type_specific_sanitizer(): void {
 		$manager = Mockery::mock( 'WP_Customize_Manager' );
 		$manager->expects( 'add_section' )->once()->with( 'cik_hybrid_settings', Mockery::type( 'array' ) );
-		$manager->expects( 'add_control' )->times( 4 );
+		$manager->expects( 'add_control' )->times( 5 );
 
 		$callbacks = array();
-		$manager->expects( 'add_setting' )->times( 4 )->andReturnUsing(
+		$manager->expects( 'add_setting' )->times( 5 )->andReturnUsing(
 			static function ( string $id, array $args ) use ( &$callbacks ): void {
 				$callbacks[ $id ] = $args['sanitize_callback'];
 			}
@@ -132,6 +171,7 @@ final class SettingsTest extends TestCase {
 
 		$this->assertSame(
 			array(
+				'cik_hybrid_show_site_name'   => 'cik_hybrid_sanitize_checkbox_setting',
 				'cik_hybrid_social_facebook'  => 'cik_hybrid_sanitize_url_setting',
 				'cik_hybrid_social_instagram' => 'cik_hybrid_sanitize_url_setting',
 				'cik_hybrid_social_linkedin'  => 'cik_hybrid_sanitize_url_setting',
