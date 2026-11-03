@@ -236,11 +236,6 @@
     @apply max-lg:hidden;
   }
 
-  html:not(.js) .cik-menu__toggle,
-  html:not(.js) .cik-nav-toggle {
-    display: none;
-  }
-
   html:not(.js) .cik-menu .sub-menu {
     @apply lg:hidden;
   }
@@ -249,6 +244,11 @@
   html:not(.js) .cik-menu .menu-item:focus-within > .sub-menu {
     @apply lg:block;
   }
+}
+
+/* Unlayered so it also beats the toggle's display utility. */
+html:not(.js) :is(.cik-menu__toggle, .cik-nav-toggle) {
+  display: none;
 }
 
 /* WooCommerce: its stylesheet handles layout; this aligns typography and buttons with the tokens. */
