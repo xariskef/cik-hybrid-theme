@@ -17,6 +17,11 @@
 /package.json export-ignore
 /pnpm-lock.yaml export-ignore
 /phpcs.xml.dist export-ignore
+/phpunit.xml.dist export-ignore
+/tests export-ignore
+/vitest.config.ts export-ignore
+/playwright.config.ts export-ignore
+/.wp-env.json export-ignore
 /tsconfig.json export-ignore
 /vite.config.ts export-ignore
 /AGENTS.md export-ignore
