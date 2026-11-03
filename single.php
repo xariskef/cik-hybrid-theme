@@ -18,18 +18,20 @@ while ( have_posts() ) :
 			<?php the_title( '<h1 class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">', '</h1>' ); ?>
 			<p class="mt-4 flex flex-wrap items-center gap-x-3 text-muted">
 				<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
-				<span aria-hidden="true">&middot;</span>
-				<span>
-					<?php
-					/* translators: %s: author name. */
-					printf( esc_html__( 'By %s', 'cik-hybrid' ), esc_html( get_the_author() ) );
-					?>
-				</span>
+				<?php if ( get_the_author() ) : ?>
+					<span aria-hidden="true">&middot;</span>
+					<span>
+						<?php
+						/* translators: %s: author name. */
+						printf( esc_html__( 'By %s', 'cik-hybrid' ), esc_html( get_the_author() ) );
+						?>
+					</span>
+				<?php endif; ?>
 			</p>
 		</header>
 
 		<?php if ( has_post_thumbnail() ) : ?>
-			<figure class="cik-container mt-10 max-w-wide">
+			<div class="cik-container mt-10 max-w-wide">
 				<?php
 				the_post_thumbnail(
 					'cik-hybrid-hero',
@@ -40,7 +42,7 @@ while ( have_posts() ) :
 					)
 				);
 				?>
-			</figure>
+			</div>
 		<?php endif; ?>
 
 		<div class="cik-prose cik-container mt-10">
@@ -66,7 +68,7 @@ while ( have_posts() ) :
 			array(
 				'prev_text' => '<span class="block text-sm text-muted">' . esc_html__( 'Previous post', 'cik-hybrid' ) . '</span> %title',
 				'next_text' => '<span class="block text-sm text-muted">' . esc_html__( 'Next post', 'cik-hybrid' ) . '</span> %title',
-				'class'     => 'border-t border-line pt-8 [&_.nav-links]:grid [&_.nav-links]:gap-6 sm:[&_.nav-links]:grid-cols-2 [&_.nav-next]:sm:text-right',
+				'class'     => 'cik-post-navigation', // Core runs this through sanitize_html_class(): one class only.
 			)
 		);
 

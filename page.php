@@ -16,9 +16,9 @@ while ( have_posts() ) :
 		<?php cik_hybrid_component( 'page-header', array( 'title' => get_the_title() ) ); ?>
 
 		<?php if ( has_post_thumbnail() ) : ?>
-			<figure class="cik-container mt-10 max-w-wide">
+			<div class="cik-container mt-10 max-w-wide">
 				<?php the_post_thumbnail( 'cik-hybrid-hero', array( 'class' => 'w-full rounded-card' ) ); ?>
-			</figure>
+			</div>
 		<?php endif; ?>
 
 		<div class="cik-prose cik-container mt-10">

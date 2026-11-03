@@ -164,6 +164,22 @@
     }
   }
 
+  .cik-pagination {
+    @apply mt-12;
+  }
+
+  .cik-post-navigation {
+    @apply border-t border-line pt-8;
+  }
+
+  .cik-post-navigation .nav-links {
+    @apply grid gap-6 sm:grid-cols-2;
+  }
+
+  .cik-post-navigation .nav-next {
+    @apply sm:col-start-2 sm:text-right;
+  }
+
   .cik-pagination .nav-links {
     @apply flex flex-wrap items-center justify-center gap-2;
   }
