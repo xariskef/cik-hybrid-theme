@@ -13,7 +13,7 @@
       "custom": false,
       "customGradient": false,
       "palette": [
-        { "slug": "base", "name": "Base", "color": "#ffffff" },
+        { "slug": "canvas", "name": "Canvas", "color": "#ffffff" },
         { "slug": "surface", "name": "Surface", "color": "#f5f6f8" },
         { "slug": "ink", "name": "Ink", "color": "#15171c" },
         { "slug": "muted", "name": "Muted", "color": "#545b68" },
@@ -39,7 +39,7 @@
       ],
       "fontSizes": [
         { "slug": "sm", "name": "Small", "size": "0.875rem" },
-        { "slug": "base", "name": "Base", "size": "1rem" },
+        { "slug": "canvas", "name": "Canvas", "size": "1rem" },
         { "slug": "lg", "name": "Large", "size": "1.125rem" },
         { "slug": "xl", "name": "Extra large", "size": "1.25rem" },
         { "slug": "3xl", "name": "Heading", "size": "1.875rem" },

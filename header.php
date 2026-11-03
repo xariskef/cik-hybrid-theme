@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 <?php wp_body_open(); ?>
 <a class="cik-skip-link" href="#main"><?php esc_html_e( 'Skip to content', 'cik-hybrid' ); ?></a>
 
-<header class="relative z-30 border-b border-line bg-base">
+<header class="relative z-30 border-b border-line bg-canvas">
 	<div class="cik-container flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4 lg:flex-nowrap">
 		<?php cik_hybrid_component( 'site-logo' ); ?>
 

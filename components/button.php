@@ -34,7 +34,7 @@ if ( '' === $args['label'] ) {
 
 $cik_hybrid_variants = array(
 	'primary'   => 'bg-accent text-accent-ink hover:bg-accent-strong hover:text-accent-ink',
-	'secondary' => 'border border-line bg-base text-ink hover:border-ink hover:text-ink',
+	'secondary' => 'border border-line bg-canvas text-ink hover:border-ink hover:text-ink',
 	'ghost'     => 'text-accent hover:bg-surface',
 );
 $cik_hybrid_classes  = 'inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 font-semibold no-underline transition-colors '

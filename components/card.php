@@ -35,7 +35,7 @@ $heading_tag = cik_hybrid_heading_tag( (string) $args['heading_level'] );
 $permalink   = get_permalink( $card_post );
 $categories  = 'post' === $card_post->post_type ? get_the_category( $card_post->ID ) : array();
 ?>
-<article <?php post_class( 'group relative flex flex-col overflow-hidden rounded-card border border-line bg-base transition-shadow hover:shadow-lg', $card_post ); ?>>
+<article <?php post_class( 'group relative flex flex-col overflow-hidden rounded-card border border-line bg-canvas transition-shadow hover:shadow-lg', $card_post ); ?>>
 	<?php if ( $args['show_image'] && has_post_thumbnail( $card_post ) ) : ?>
 		<div class="aspect-[16/10] overflow-hidden bg-surface">
 			<?php
