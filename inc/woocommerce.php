@@ -41,7 +41,7 @@ remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  * Opens the theme's content wrapper around WooCommerce pages.
  */
 function cik_hybrid_woocommerce_wrapper_start(): void {
-	echo '<div class="cik-container cik-woocommerce py-12">';
+	echo '<div class="cik-container cik-woocommerce pt-36 pb-4 sm:pt-44">';
 }
 add_action( 'woocommerce_before_main_content', 'cik_hybrid_woocommerce_wrapper_start', 10 );
 
@@ -60,7 +60,7 @@ add_action( 'woocommerce_after_main_content', 'cik_hybrid_woocommerce_wrapper_en
  * @return array<string, string>
  */
 function cik_hybrid_woocommerce_breadcrumb_defaults( array $defaults ): array {
-	$defaults['wrap_before'] = '<nav class="woocommerce-breadcrumb mb-6 text-sm text-muted" aria-label="' . esc_attr__( 'Breadcrumb', 'cik-hybrid' ) . '">';
+	$defaults['wrap_before'] = '<nav class="woocommerce-breadcrumb mb-8 text-sm text-muted [&_a]:text-muted [&_a]:no-underline [&_a:hover]:text-accent" aria-label="' . esc_attr__( 'Breadcrumb', 'cik-hybrid' ) . '">';
 	$defaults['wrap_after']  = '</nav>';
 	$defaults['delimiter']   = '<span class="mx-2" aria-hidden="true">/</span>';
 
@@ -78,7 +78,7 @@ function cik_hybrid_cart_link(): string {
 	$count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
 
 	return sprintf(
-		'<a class="cik-cart-link relative inline-flex size-10 items-center justify-center rounded-md border border-line text-ink hover:border-accent hover:text-accent" href="%1$s">%2$s<span class="sr-only">%3$s</span><span class="absolute -top-1.5 -right-1.5 min-w-5 rounded-full bg-accent px-1 text-center text-xs font-semibold text-accent-ink%4$s" aria-hidden="true">%5$s</span></a>',
+		'<a class="cik-cart-link relative inline-flex size-11 items-center justify-center rounded-full border border-night-line text-night-ink hover:border-night-ink hover:text-night-ink" href="%1$s">%2$s<span class="sr-only">%3$s</span><span class="absolute -top-1 -right-1 min-w-5 rounded-full bg-accent px-1 text-center text-xs leading-5 font-bold text-accent-ink%4$s" aria-hidden="true">%5$s</span></a>',
 		esc_url( wc_get_cart_url() ),
 		cik_hybrid_get_icon( 'cart' ),
 		/* translators: %d: number of items in the cart. */
@@ -156,14 +156,19 @@ function cik_hybrid_front_page_products(): void {
 		return;
 	}
 	?>
-	<section class="cik-container pt-16" aria-labelledby="cik-products-title">
+	<section class="cik-container pt-20 sm:pt-28" aria-labelledby="cik-products-title">
 		<?php
+		$shop_url = wc_get_page_permalink( 'shop' );
 		cik_hybrid_component(
 			'section-heading',
 			array(
 				'title'   => __( 'From the shop', 'cik-hybrid' ),
 				'eyebrow' => __( 'Shop', 'cik-hybrid' ),
 				'id'      => 'cik-products-title',
+				'link'    => $shop_url ? array(
+					'label' => __( 'Visit the shop', 'cik-hybrid' ),
+					'url'   => $shop_url,
+				) : array(),
 			)
 		);
 		?>
