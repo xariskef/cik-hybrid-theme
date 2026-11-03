@@ -44,6 +44,11 @@
 	(load_template() / WP_Block::render()), so their variables are local.
 	Top-level templates run in global scope and keep the prefix.
 	-->
+	<!-- Core looks for "<script>.asset.php" next to block scripts. -->
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+		<exclude-pattern>/blocks/*/*.asset.php</exclude-pattern>
+	</rule>
+
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound">
 		<exclude-pattern>/components/*</exclude-pattern>
 		<exclude-pattern>/blocks/*/render.php</exclude-pattern>

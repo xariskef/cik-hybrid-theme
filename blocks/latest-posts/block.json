@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "cik-hybrid/latest-posts",
+  "version": "1.0.0",
+  "title": "Latest posts grid",
+  "category": "widgets",
+  "icon": "grid-view",
+  "description": "A grid of recent posts rendered on the server with the theme's card component.",
+  "keywords": ["posts", "blog", "recent", "cards"],
+  "textdomain": "cik-hybrid",
+  "attributes": {
+    "count": {
+      "type": "integer",
+      "default": 3
+    },
+    "category": {
+      "type": "integer",
+      "default": 0
+    },
+    "columns": {
+      "type": "integer",
+      "default": 3
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "editorScript": "file:./editor.js",
+  "render": "file:./render.php"
+}
