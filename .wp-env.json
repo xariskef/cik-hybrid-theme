@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/wp-env.json",
+  "core": null,
+  "phpVersion": "8.2",
+  "plugins": ["https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip"],
+  "mappings": {
+    "wp-content/themes/cik-hybrid-theme": "."
+  },
+  "config": {
+    "WP_DEBUG": true,
+    "WP_DEBUG_LOG": true,
+    "WP_DEBUG_DISPLAY": true
+  },
+  "env": {
+    "development": {
+      "config": {
+        "WP_HOME": "http://127.0.0.1:8888",
+        "WP_SITEURL": "http://127.0.0.1:8888"
+      }
+    }
+  },
+  "lifecycleScripts": {
+    "afterStart": "wp-env run cli sh wp-content/themes/cik-hybrid-theme/tests/e2e/seed.sh"
+  }
+}
