@@ -1,6 +1,6 @@
 <?php
 /**
- * Component: breadcrumbs for the current request.
+ * Component: breadcrumbs for the current request, styled for the dark page header.
  *
  * @package Cik_Hybrid
  *
@@ -83,12 +83,12 @@ if ( is_home() ) {
 $trail = (array) apply_filters( 'cik_hybrid_breadcrumbs', $trail );
 $last  = count( $trail ) - 1;
 ?>
-<nav class="text-sm text-muted <?php echo esc_attr( $args['class'] ); ?>" aria-label="<?php esc_attr_e( 'Breadcrumb', 'cik-hybrid' ); ?>">
+<nav class="text-sm text-night-muted <?php echo esc_attr( $args['class'] ); ?>" aria-label="<?php esc_attr_e( 'Breadcrumb', 'cik-hybrid' ); ?>">
 	<ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
 		<?php foreach ( $trail as $index => $crumb ) : ?>
 			<li class="flex items-center gap-2">
 				<?php if ( $index < $last && ! empty( $crumb['url'] ) && ! is_wp_error( $crumb['url'] ) ) : ?>
-					<a class="text-muted hover:text-accent" href="<?php echo esc_url( $crumb['url'] ); ?>"><?php echo esc_html( $crumb['label'] ); ?></a>
+					<a class="text-night-muted no-underline hover:text-night-ink" href="<?php echo esc_url( $crumb['url'] ); ?>"><?php echo esc_html( $crumb['label'] ); ?></a>
 					<?php
 					cik_hybrid_component(
 						'icon',
@@ -99,7 +99,7 @@ $last  = count( $trail ) - 1;
 					);
 					?>
 				<?php elseif ( $index === $last ) : ?>
-					<span aria-current="page" class="text-ink"><?php echo esc_html( $crumb['label'] ); ?></span>
+					<span aria-current="page" class="text-night-ink"><?php echo esc_html( $crumb['label'] ); ?></span>
 				<?php else : ?>
 					<span><?php echo esc_html( $crumb['label'] ); ?></span>
 					<?php

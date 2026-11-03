@@ -1,13 +1,13 @@
 <?php
 /**
- * Component: button (a link styled as a button, or a real <button>).
+ * Component: pill button (a link styled as a button, or a real <button>).
  *
  * @package Cik_Hybrid
  *
  * @var array $args {
  *     @type string $label   Visible text. Required.
  *     @type string $url     Link target. Empty renders a <button>. Default ''.
- *     @type string $variant 'primary', 'secondary' or 'ghost'. Default 'primary'.
+ *     @type string $variant 'primary', 'secondary', 'light', 'outline-light' (on dark bands) or 'ghost'. Default 'primary'.
  *     @type string $icon    Optional trailing icon name. Default ''.
  *     @type string $type    Button type when no URL is given. Default 'button'.
  *     @type string $class   Extra CSS classes. Default ''.
@@ -32,14 +32,15 @@ if ( '' === $args['label'] ) {
 	return;
 }
 
+// Full class names so Tailwind's scanner sees them; styles live in src/css/app.css.
 $cik_hybrid_variants = array(
-	'primary'   => 'bg-accent text-accent-ink hover:bg-accent-strong hover:text-accent-ink',
-	'secondary' => 'border border-line bg-canvas text-ink hover:border-ink hover:text-ink',
-	'ghost'     => 'text-accent hover:bg-surface',
+	'primary'       => 'cik-btn--primary',
+	'secondary'     => 'cik-btn--secondary',
+	'light'         => 'cik-btn--light',
+	'outline-light' => 'cik-btn--outline-light',
+	'ghost'         => 'cik-btn--ghost',
 );
-$cik_hybrid_classes  = 'inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 font-semibold no-underline transition-colors '
-	. ( $cik_hybrid_variants[ $args['variant'] ] ?? $cik_hybrid_variants['primary'] )
-	. ' ' . $args['class'];
+$cik_hybrid_classes  = 'cik-btn ' . ( $cik_hybrid_variants[ $args['variant'] ] ?? $cik_hybrid_variants['primary'] ) . ' ' . $args['class'];
 $cik_hybrid_icon     = '' !== $args['icon'] ? cik_hybrid_get_icon( $args['icon'], array( 'class' => 'size-4' ) ) : '';
 
 if ( '' !== $args['url'] ) :

@@ -84,7 +84,7 @@ final class ComponentsTest extends TestCase {
 		);
 
 		$this->assertStringContainsString( 'href="https://example.test/blog/"', $html );
-		$this->assertStringContainsString( 'bg-accent', $html );
+		$this->assertStringContainsString( 'cik-btn--primary', $html );
 		$this->assertStringNotContainsString( '<button', $html );
 	}
 
@@ -100,7 +100,7 @@ final class ComponentsTest extends TestCase {
 
 		$this->assertStringContainsString( 'type="button"', $html );
 		// Unknown variants get the primary styles.
-		$this->assertStringContainsString( 'bg-accent', $html );
+		$this->assertStringContainsString( 'cik-btn--primary', $html );
 
 		$submit = $this->render_component(
 			'button',
