@@ -73,6 +73,12 @@ $cik_hybrid_social = array_filter( $cik_hybrid_social, fn( $link ) => '' !== $li
 				}
 				?>
 			</p>
+			<?php
+			$cik_hybrid_credit = cik_hybrid_footer_credit();
+			if ( '' !== $cik_hybrid_credit ) :
+				?>
+				<p class="cik-credit"><?php echo wp_kses_post( $cik_hybrid_credit ); ?></p>
+			<?php endif; ?>
 		</div>
 	</div>
 </footer>

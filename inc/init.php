@@ -16,6 +16,7 @@ require_once CIK_HYBRID_INC_DIR . '/navigation/class-cik-hybrid-walker-nav.php';
 require_once CIK_HYBRID_INC_DIR . '/blocks.php';
 require_once CIK_HYBRID_INC_DIR . '/settings.php';
 require_once CIK_HYBRID_INC_DIR . '/front-page.php';
+require_once CIK_HYBRID_INC_DIR . '/template-tags.php';
 
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once CIK_HYBRID_INC_DIR . '/woocommerce.php';

@@ -25,6 +25,7 @@ require_once CIK_HYBRID_INC_DIR . '/helpers/islands.php';
 require_once CIK_HYBRID_INC_DIR . '/blocks.php';
 require_once CIK_HYBRID_INC_DIR . '/settings.php';
 require_once CIK_HYBRID_INC_DIR . '/front-page.php';
+require_once CIK_HYBRID_INC_DIR . '/template-tags.php';
 
 // Hooks added while loading the files above are not part of any test.
 Brain\Monkey\tearDown();
