@@ -120,12 +120,22 @@
     @apply bg-canvas font-sans text-ink antialiased;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-bold tracking-tight;
+    line-height: 1.08;
+  }
+
   a {
     @apply text-accent underline-offset-4 hover:text-accent-strong;
   }
 
   :where(input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"]), textarea, select) {
-    @apply w-full rounded-md border border-line bg-canvas px-3 py-2;
+    @apply w-full rounded-xl border border-line bg-canvas px-4 py-3 text-ink;
   }
 
   :where(label) {
@@ -135,20 +145,88 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-brand;
   }
+
+  ::selection {
+    @apply bg-brand text-accent-ink;
+  }
 }
 
 @layer components {
   .cik-container {
-    @apply mx-auto w-full max-w-wide px-4 sm:px-6;
+    @apply mx-auto w-full max-w-wide px-4 sm:px-6 lg:px-8;
   }
 
   .cik-skip-link {
-    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-canvas focus:no-underline;
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-canvas focus:px-5 focus:py-2 focus:font-semibold focus:text-ink focus:no-underline;
+  }
+
+  /* Pill buttons. The button component picks one variant; WooCommerce buttons copy the primary one below. */
+  .cik-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-display text-base font-bold no-underline transition-colors;
+  }
+
+  .cik-btn--primary {
+    @apply bg-accent text-accent-ink hover:bg-accent-strong hover:text-accent-ink;
+  }
+
+  .cik-btn--secondary {
+    @apply border-2 border-ink px-5.5 py-2.5 text-ink hover:bg-ink hover:text-canvas;
+  }
+
+  .cik-btn--light {
+    @apply bg-canvas text-ink hover:bg-brand-tint hover:text-ink;
+  }
+
+  .cik-btn--outline-light {
+    @apply border-2 border-night-ink/70 px-5.5 py-2.5 text-night-ink hover:border-night-ink hover:bg-night-ink hover:text-night;
+  }
+
+  .cik-btn--ghost {
+    @apply text-accent hover:bg-brand-tint;
+  }
+
+  /* Small pill label: section eyebrows and category badges. */
+  .cik-badge {
+    @apply inline-flex items-center rounded-full bg-brand-tint px-3 py-1 text-xs font-bold tracking-wider text-accent-strong uppercase;
+  }
+
+  .cik-badge--dark {
+    @apply bg-brand/15 text-brand-bright;
+  }
+
+  .cik-badge--light {
+    @apply bg-accent-strong text-accent-ink;
+  }
+
+  .cik-badge--solid {
+    @apply bg-accent text-accent-ink;
+  }
+
+  /* Full-width bands that alternate with white sections. */
+  .cik-band {
+    @apply py-20 sm:py-28;
+  }
+
+  .cik-band--dark {
+    @apply relative isolate overflow-hidden bg-night text-night-ink;
+  }
+
+  .cik-band--accent {
+    @apply relative isolate overflow-hidden bg-accent text-accent-ink;
+  }
+
+  .cik-band--surface {
+    @apply bg-surface;
+  }
+
+  /* Plain links inside coloured bands take the band's text colour. */
+  :where(.cik-band--dark, .cik-band--accent) a:not(.cik-btn, .cik-card a) {
+    @apply text-current;
   }
 
   /* Long-form content produced by the editor (the_content, comments). */
   .cik-prose {
-    @apply text-lg leading-relaxed;
+    @apply text-lg leading-[1.75] text-ink/90;
 
     & > * {
       @apply mx-auto max-w-content;
@@ -166,28 +244,44 @@
       @apply mt-6;
     }
 
+    & :where(h2, h3, h4) {
+      @apply text-ink;
+    }
+
     & h2 {
-      @apply mt-12 text-3xl font-bold tracking-tight;
+      @apply mt-14 text-3xl sm:text-4xl;
     }
 
     & h3 {
-      @apply mt-10 text-2xl font-semibold;
+      @apply mt-10 text-2xl;
     }
 
     & h4 {
-      @apply mt-8 text-xl font-semibold;
+      @apply mt-8 text-xl;
+    }
+
+    & > :where(h2, h3, h4) + * {
+      @apply mt-4;
+    }
+
+    & > :first-child {
+      @apply mt-0;
     }
 
     & a {
-      @apply underline;
+      @apply font-medium underline decoration-brand decoration-2 underline-offset-4 hover:decoration-accent-strong;
+    }
+
+    & strong {
+      @apply font-semibold text-ink;
     }
 
     & ul {
-      @apply list-disc pl-6;
+      @apply list-disc pl-6 marker:text-brand;
     }
 
     & ol {
-      @apply list-decimal pl-6;
+      @apply list-decimal pl-6 marker:font-semibold marker:text-accent;
     }
 
     & li + li {
@@ -195,15 +289,27 @@
     }
 
     & blockquote {
-      @apply border-l-4 border-brand pl-5 italic text-muted;
+      @apply rounded-r-card border-l-4 border-brand bg-brand-tint/60 py-5 pr-6 pl-6 font-display text-xl leading-snug font-semibold text-ink not-italic sm:text-2xl;
+    }
+
+    & blockquote p + p {
+      @apply mt-3;
+    }
+
+    & blockquote cite {
+      @apply mt-3 block font-sans text-base font-medium text-muted not-italic;
     }
 
     & pre {
-      @apply overflow-x-auto rounded-card bg-ink p-4 font-mono text-sm text-canvas;
+      @apply overflow-x-auto rounded-card bg-night p-5 font-mono text-sm leading-relaxed text-night-ink;
     }
 
     & :not(pre) > code {
-      @apply rounded bg-surface px-1.5 py-0.5 font-mono text-[0.9em];
+      @apply rounded-md bg-surface px-1.5 py-0.5 font-mono text-[0.88em] text-accent-strong;
+    }
+
+    & hr {
+      @apply border-line;
     }
 
     & img,
@@ -212,12 +318,20 @@
       @apply h-auto max-w-full rounded-card;
     }
 
+    & figure img {
+      @apply w-full;
+    }
+
     & figcaption {
-      @apply mt-2 text-center text-sm text-muted;
+      @apply mt-3 text-center text-sm text-muted;
     }
 
     & table {
       @apply w-full border-collapse text-left text-base;
+    }
+
+    & th {
+      @apply bg-surface font-semibold;
     }
 
     & th,
@@ -239,15 +353,15 @@
   }
 
   .cik-pagination {
-    @apply mt-12;
-  }
-
-  .cik-post-navigation {
-    @apply border-t border-line pt-8;
+    @apply mt-14;
   }
 
   .cik-post-navigation .nav-links {
-    @apply grid gap-6 sm:grid-cols-2;
+    @apply grid gap-4 sm:grid-cols-2;
+  }
+
+  .cik-post-navigation a {
+    @apply block h-full rounded-card border border-line p-5 font-display text-lg font-bold text-ink no-underline transition-colors hover:border-accent hover:text-accent;
   }
 
   .cik-post-navigation .nav-next {
@@ -259,30 +373,36 @@
   }
 
   .cik-pagination .page-numbers {
-    @apply inline-flex min-w-10 items-center justify-center gap-1 rounded-md border border-line px-3 py-2 font-medium text-ink no-underline hover:border-accent hover:text-accent;
+    @apply inline-flex h-11 min-w-11 items-center justify-center gap-1 rounded-full border border-line px-4 font-semibold text-ink no-underline transition-colors hover:border-ink hover:text-ink;
   }
 
   .cik-pagination .page-numbers.current {
-    @apply border-accent bg-accent text-accent-ink;
+    @apply border-ink bg-ink text-canvas;
   }
 
   .cik-pagination .page-numbers.dots {
     @apply border-transparent;
   }
 
-  /* Header navigation (markup from Cik_Hybrid_Walker_Nav). */
+  /* Header island navigation (markup from Cik_Hybrid_Walker_Nav). */
   .cik-menu {
-    @apply flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-2;
+    @apply flex flex-col gap-1 lg:flex-row lg:items-center;
   }
 
   .cik-menu a {
-    @apply block rounded-md px-3 py-2 font-medium text-ink no-underline hover:bg-surface hover:text-accent;
+    @apply block rounded-full px-4 py-2 font-medium text-night-ink no-underline transition-colors hover:bg-night-ink/10 hover:text-night-ink;
   }
 
   .cik-menu .current-menu-item > a,
   .cik-menu .current-menu-item > .cik-menu__row > a,
   .cik-menu .current-menu-ancestor > .cik-menu__row > a {
-    @apply text-accent;
+    @apply text-brand-bright;
+  }
+
+  /* A menu item with the CSS class "is-cta" becomes the island's pill button. */
+  .cik-menu .is-cta > a,
+  .cik-menu .is-cta > .cik-menu__row > a {
+    @apply mt-2 bg-accent text-center font-display font-bold text-accent-ink hover:bg-accent-strong hover:text-accent-ink lg:mt-0 lg:ml-3 lg:px-6 lg:py-2.5;
   }
 
   .cik-menu__row {
@@ -290,7 +410,7 @@
   }
 
   .cik-menu__toggle {
-    @apply inline-flex size-9 items-center justify-center rounded-md text-muted hover:bg-surface hover:text-ink;
+    @apply inline-flex size-9 items-center justify-center rounded-full text-night-muted hover:bg-night-ink/10 hover:text-night-ink;
   }
 
   .cik-menu__toggle svg {
@@ -302,11 +422,15 @@
   }
 
   .cik-menu .sub-menu {
-    @apply ml-4 border-l border-line pl-2 lg:absolute lg:top-full lg:left-0 lg:z-40 lg:ml-0 lg:min-w-56 lg:rounded-card lg:border lg:bg-canvas lg:p-2 lg:shadow-lg;
+    @apply ml-4 border-l border-night-line pl-2 lg:absolute lg:top-full lg:left-0 lg:z-40 lg:mt-2 lg:ml-0 lg:min-w-56 lg:rounded-card lg:border lg:border-night-line lg:bg-night-card lg:p-2 lg:shadow-2xl;
+  }
+
+  .cik-menu .sub-menu a {
+    @apply rounded-xl;
   }
 
   .cik-menu .sub-menu .sub-menu {
-    @apply lg:top-0 lg:left-full;
+    @apply lg:top-0 lg:left-full lg:mt-0 lg:ml-2;
   }
 
   .cik-menu .menu-item {
@@ -334,6 +458,35 @@
   html:not(.js) .cik-menu .menu-item:focus-within > .sub-menu {
     @apply lg:block;
   }
+
+  /* Comments */
+  .cik-comments .comment-body {
+    @apply rounded-card border border-line p-5;
+  }
+
+  .cik-comments .comment-author {
+    @apply flex items-center font-semibold;
+  }
+
+  .cik-comments .comment-meta a {
+    @apply text-muted no-underline;
+  }
+
+  .cik-comments .reply a {
+    @apply text-sm font-semibold;
+  }
+
+  .comment-form > p + p {
+    @apply mt-4;
+  }
+
+  .comment-form label {
+    @apply mb-1 block text-sm;
+  }
+
+  .comment-form :is(.comment-notes, .logged-in-as) {
+    @apply mt-2 text-sm text-muted;
+  }
 }
 
 /* Unlayered so it also beats the toggle's display utility. */
@@ -345,19 +498,56 @@ html:not(.js) :is(.cik-menu__toggle, .cik-nav-toggle) {
 @layer components {
   .cik-woocommerce .product_title,
   .cik-woocommerce .woocommerce-products-header__title {
-    @apply mb-4 text-3xl font-bold tracking-tight sm:text-4xl;
+    @apply mb-4 text-4xl sm:text-5xl;
   }
 
   .cik-woocommerce h2 {
-    @apply mb-3 text-2xl font-semibold;
-  }
-
-  .cik-woocommerce .price {
-    @apply text-xl font-semibold;
+    @apply mb-3 text-2xl;
   }
 }
 
 /* Unlayered on purpose: WooCommerce's own CSS is unlayered and would beat any @layer rule. */
 .woocommerce :is(a.button, button.button, input.button, #respond input#submit, a.button.alt, button.button.alt) {
-  @apply rounded-md bg-accent font-semibold text-accent-ink hover:bg-accent-strong hover:text-accent-ink;
+  @apply rounded-full bg-accent px-6 py-3 font-display font-bold text-accent-ink hover:bg-accent-strong hover:text-accent-ink;
+}
+
+.woocommerce :is(div.product p.price, div.product span.price, ul.products li.product .price) {
+  @apply font-display text-xl font-bold text-ink;
+}
+
+.woocommerce span.onsale {
+  @apply m-2 min-h-0 min-w-0 rounded-full bg-accent px-3 py-1 text-xs leading-normal font-bold text-accent-ink uppercase;
+}
+
+.woocommerce ul.products li.product {
+  @apply flex flex-col rounded-card bg-canvas p-3 pb-5 shadow-card;
+}
+
+.woocommerce ul.products li.product a img {
+  @apply mb-4 rounded-xl;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+  @apply px-2 font-display text-lg font-bold text-ink;
+}
+
+.woocommerce ul.products li.product :is(.price, .button) {
+  @apply mx-2 self-start;
+}
+
+.woocommerce ul.products li.product .button {
+  @apply px-4 py-2.5 text-sm whitespace-nowrap;
+}
+
+.woocommerce :is(.woocommerce-message, .woocommerce-info, .woocommerce-error) {
+  @apply rounded-card border-t-0 bg-surface;
+}
+
+.woocommerce .woocommerce-ordering select {
+  @apply w-auto rounded-full py-2;
+}
+
+/* WooCommerce sets img { height: auto } unlayered; keep the logo at its intended height on shop pages. */
+:is(.cik-site-header, footer) img.custom-logo {
+  @apply h-14 w-auto max-w-none;
 }
