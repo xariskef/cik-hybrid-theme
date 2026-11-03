@@ -18,8 +18,9 @@
         { "slug": "ink", "name": "Ink", "color": "#15171c" },
         { "slug": "muted", "name": "Muted", "color": "#545b68" },
         { "slug": "line", "name": "Line", "color": "#dfe2e8" },
-        { "slug": "accent", "name": "Accent", "color": "#1d4ed8" },
-        { "slug": "accent-strong", "name": "Accent strong", "color": "#1e3a8a" }
+        { "slug": "brand", "name": "Brand", "color": "#0088cc" },
+        { "slug": "accent", "name": "Accent", "color": "#006fa6" },
+        { "slug": "accent-strong", "name": "Accent strong", "color": "#004f78" }
       ]
     },
     "typography": {
