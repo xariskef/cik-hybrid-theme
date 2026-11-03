@@ -14,3 +14,7 @@ require_once CIK_HYBRID_INC_DIR . '/helpers/components.php';
 require_once CIK_HYBRID_INC_DIR . '/helpers/islands.php';
 require_once CIK_HYBRID_INC_DIR . '/navigation/class-cik-hybrid-walker-nav.php';
 require_once CIK_HYBRID_INC_DIR . '/blocks.php';
+
+if ( class_exists( 'WooCommerce' ) ) {
+	require_once CIK_HYBRID_INC_DIR . '/woocommerce.php';
+}

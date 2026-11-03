@@ -250,3 +250,24 @@
     @apply lg:block;
   }
 }
+
+/* WooCommerce: its stylesheet handles layout; this aligns typography and buttons with the tokens. */
+@layer components {
+  .cik-woocommerce .product_title,
+  .cik-woocommerce .woocommerce-products-header__title {
+    @apply mb-4 text-3xl font-bold tracking-tight sm:text-4xl;
+  }
+
+  .cik-woocommerce h2 {
+    @apply mb-3 text-2xl font-semibold;
+  }
+
+  .cik-woocommerce .price {
+    @apply text-xl font-semibold;
+  }
+}
+
+/* Unlayered on purpose: WooCommerce's own CSS is unlayered and would beat any @layer rule. */
+.woocommerce :is(a.button, button.button, input.button, #respond input#submit, a.button.alt, button.button.alt) {
+  @apply rounded-md bg-accent font-semibold text-accent-ink hover:bg-accent-strong hover:text-accent-ink;
+}

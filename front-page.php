@@ -155,6 +155,11 @@ if ( count( $cik_hybrid_tabs ) > 1 ) :
 	<?php
 endif;
 
+/**
+ * Fires before the latest articles section. Integrations add their own sections here.
+ */
+do_action( 'cik_hybrid_front_page_sections' );
+
 $cik_hybrid_latest = new WP_Query(
 	array(
 		'posts_per_page'      => 3,
