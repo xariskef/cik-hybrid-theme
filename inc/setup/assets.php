@@ -22,25 +22,37 @@ function cik_hybrid_vite_dev_url(): ?string {
 	static $url = false;
 
 	if ( false === $url ) {
-		$url      = null;
-		$hot_file = CIK_HYBRID_DIR . '/hot';
-
-		/**
-		 * Filters whether the theme may use the Vite dev server when a hot file exists.
-		 * Lets a production deploy that accidentally ships a hot file ignore it.
-		 *
-		 * @param bool $enabled Default true.
-		 */
-		if ( is_readable( $hot_file ) && apply_filters( 'cik_hybrid_vite_dev_enabled', true ) ) {
-			$contents = trim( (string) file_get_contents( $hot_file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local file, not a remote request.
-			$scheme   = wp_parse_url( $contents, PHP_URL_SCHEME );
-			if ( filter_var( $contents, FILTER_VALIDATE_URL ) && in_array( $scheme, array( 'http', 'https' ), true ) ) {
-				$url = untrailingslashit( esc_url_raw( $contents ) );
-			}
-		}
+		$url = cik_hybrid_read_hot_file( CIK_HYBRID_DIR . '/hot' );
 	}
 
 	return $url;
+}
+
+/**
+ * Reads and validates a hot file. Kept apart from the cached getter above so
+ * the parsing can be exercised with any path.
+ *
+ * @param string $hot_file Absolute path to the hot file.
+ * @return string|null Dev server origin without trailing slash, or null.
+ */
+function cik_hybrid_read_hot_file( string $hot_file ): ?string {
+	/**
+	 * Filters whether the theme may use the Vite dev server when a hot file exists.
+	 * Lets a production deploy that accidentally ships a hot file ignore it.
+	 *
+	 * @param bool $enabled Default true.
+	 */
+	if ( ! is_readable( $hot_file ) || ! apply_filters( 'cik_hybrid_vite_dev_enabled', true ) ) {
+		return null;
+	}
+
+	$contents = trim( (string) file_get_contents( $hot_file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local file, not a remote request.
+	$scheme   = wp_parse_url( $contents, PHP_URL_SCHEME );
+	if ( ! filter_var( $contents, FILTER_VALIDATE_URL ) || ! in_array( $scheme, array( 'http', 'https' ), true ) ) {
+		return null;
+	}
+
+	return untrailingslashit( esc_url_raw( $contents ) );
 }
 
 /**
@@ -52,12 +64,22 @@ function cik_hybrid_vite_manifest(): array {
 	static $manifest = null;
 
 	if ( null === $manifest ) {
-		$path     = CIK_HYBRID_DIR . '/dist/.vite/manifest.json';
-		$decoded  = is_readable( $path ) ? wp_json_file_decode( $path, array( 'associative' => true ) ) : null;
-		$manifest = is_array( $decoded ) ? $decoded : array();
+		$manifest = cik_hybrid_read_vite_manifest( CIK_HYBRID_DIR . '/dist/.vite/manifest.json' );
 	}
 
 	return $manifest;
+}
+
+/**
+ * Decodes a Vite manifest file. A missing or invalid file yields an empty array.
+ *
+ * @param string $path Absolute path to manifest.json.
+ * @return array<string, array<string, mixed>>
+ */
+function cik_hybrid_read_vite_manifest( string $path ): array {
+	$decoded = is_readable( $path ) ? wp_json_file_decode( $path, array( 'associative' => true ) ) : null;
+
+	return is_array( $decoded ) ? $decoded : array();
 }
 
 /**
