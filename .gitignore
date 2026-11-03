@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build output (built in CI / release zip)
+dist/
+
+# Vite dev server marker (written by vite.config.ts while `pnpm dev` runs)
+hot
+
+# Environment and editor files
+.env*
+.idea/
+.vscode/
+*.log
+.DS_Store
+Thumbs.db
