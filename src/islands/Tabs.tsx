@@ -51,7 +51,7 @@ export default function Tabs({ tabs = [], label }: TabsProps) {
 
   return (
     <div>
-      <div role="tablist" aria-label={label} className="flex flex-wrap gap-2 border-b border-line">
+      <div role="tablist" aria-label={label} className="inline-flex max-w-full flex-wrap gap-1 rounded-3xl bg-surface p-1.5">
         {tabs.map((tab, index) => (
           <button
             key={index}
@@ -66,8 +66,8 @@ export default function Tabs({ tabs = [], label }: TabsProps) {
             tabIndex={index === active ? 0 : -1}
             onClick={() => setActive(index)}
             onKeyDown={onKeyDown}
-            className={`-mb-px border-b-2 px-4 py-3 font-semibold ${
-              index === active ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-ink'
+            className={`rounded-full px-5 py-2.5 font-display font-bold transition-colors ${
+              index === active ? 'bg-ink text-canvas shadow-sm' : 'text-muted hover:bg-canvas hover:text-ink'
             }`}
           >
             {tab.label}
@@ -85,27 +85,30 @@ export default function Tabs({ tabs = [], label }: TabsProps) {
             aria-labelledby={`${baseId}-tab-${index}`}
             tabIndex={0}
             hidden={index !== active}
-            className="py-6"
+            className="pt-8"
           >
-            <ul className="divide-y divide-line">
+            <ul className="grid gap-4 sm:grid-cols-2">
               {tab.items.map((item, itemIndex) => {
                 const href = safeUrl(item.url);
                 return (
-                  <li key={itemIndex} className="flex flex-wrap items-baseline justify-between gap-2 py-3">
+                  <li
+                    key={itemIndex}
+                    className="relative flex flex-col gap-2 rounded-card border border-line p-5 transition-colors hover:border-accent"
+                  >
                     {href ? (
-                      <a className="font-medium text-ink no-underline hover:text-accent" href={href}>
+                      <a className="font-display text-lg font-bold text-ink no-underline after:absolute after:inset-0 hover:text-accent" href={href}>
                         {item.title}
                       </a>
                     ) : (
-                      <span className="font-medium">{item.title}</span>
+                      <span className="font-display text-lg font-bold">{item.title}</span>
                     )}
-                    {item.meta && <span className="text-sm text-muted">{item.meta}</span>}
+                    {item.meta && <span className="order-first text-sm text-muted">{item.meta}</span>}
                   </li>
                 );
               })}
             </ul>
             {moreUrl && tab.moreLabel && (
-              <a className="mt-4 inline-block font-semibold" href={moreUrl}>
+              <a className="mt-6 inline-flex font-display font-bold" href={moreUrl}>
                 {tab.moreLabel}
               </a>
             )}
