@@ -2,8 +2,7 @@
 /**
  * Server render for cik-hybrid/latest-posts.
  *
- * Attributes arrive from post content (or the REST preview), so they are
- * re-validated here even though block.json declares their types.
+ * Attributes are re-validated by cik_hybrid_latest_posts_settings() (inc/blocks.php).
  *
  * @package Cik_Hybrid
  *
@@ -14,10 +13,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$count        = min( max( absint( $attributes['count'] ?? 3 ), 1 ), 12 );
-$columns      = min( max( absint( $attributes['columns'] ?? 3 ), 1 ), 4 );
-$category     = absint( $attributes['category'] ?? 0 );
-$show_excerpt = ! empty( $attributes['showExcerpt'] );
+$settings     = cik_hybrid_latest_posts_settings( $attributes );
+$count        = $settings['count'];
+$columns      = $settings['columns'];
+$category     = $settings['category'];
+$show_excerpt = $settings['show_excerpt'];
 
 $query_args = array(
 	'post_type'           => 'post',
