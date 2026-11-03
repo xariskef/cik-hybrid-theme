@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.5/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "layout": {
+      "contentSize": "44rem",
+      "wideSize": "72rem"
+    },
+    "color": {
+      "defaultPalette": false,
+      "defaultGradients": false,
+      "custom": false,
+      "customGradient": false,
+      "palette": [
+        { "slug": "base", "name": "Base", "color": "#ffffff" },
+        { "slug": "surface", "name": "Surface", "color": "#f5f6f8" },
+        { "slug": "ink", "name": "Ink", "color": "#15171c" },
+        { "slug": "muted", "name": "Muted", "color": "#545b68" },
+        { "slug": "line", "name": "Line", "color": "#dfe2e8" },
+        { "slug": "accent", "name": "Accent", "color": "#1d4ed8" },
+        { "slug": "accent-strong", "name": "Accent strong", "color": "#1e3a8a" }
+      ]
+    },
+    "typography": {
+      "defaultFontSizes": false,
+      "customFontSize": false,
+      "fontFamilies": [
+        {
+          "slug": "sans",
+          "name": "System sans",
+          "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
+        },
+        {
+          "slug": "mono",
+          "name": "System mono",
+          "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        }
+      ],
+      "fontSizes": [
+        { "slug": "sm", "name": "Small", "size": "0.875rem" },
+        { "slug": "base", "name": "Base", "size": "1rem" },
+        { "slug": "lg", "name": "Large", "size": "1.125rem" },
+        { "slug": "xl", "name": "Extra large", "size": "1.25rem" },
+        { "slug": "3xl", "name": "Heading", "size": "1.875rem" },
+        { "slug": "5xl", "name": "Display", "size": "3rem" }
+      ]
+    },
+    "spacing": {
+      "defaultSpacingSizes": false,
+      "units": ["px", "rem", "%", "vw"],
+      "spacingSizes": [
+        { "slug": "2", "name": "0.5rem", "size": "0.5rem" },
+        { "slug": "4", "name": "1rem", "size": "1rem" },
+        { "slug": "6", "name": "1.5rem", "size": "1.5rem" },
+        { "slug": "10", "name": "2.5rem", "size": "2.5rem" },
+        { "slug": "16", "name": "4rem", "size": "4rem" }
+      ]
+    }
+  }
+}

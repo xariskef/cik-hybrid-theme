@@ -8,3 +8,6 @@
 defined( 'ABSPATH' ) || exit;
 
 require_once CIK_HYBRID_INC_DIR . '/setup/assets.php';
+require_once CIK_HYBRID_INC_DIR . '/setup/theme-setup.php';
+require_once CIK_HYBRID_INC_DIR . '/helpers/icons.php';
+require_once CIK_HYBRID_INC_DIR . '/navigation/class-cik-hybrid-walker-nav.php';
