@@ -1,6 +1,6 @@
 <?php
 /**
- * Component: site logo (custom logo, or the site name as text).
+ * Component: site logo (custom logo, or the site name as text), for the dark header and footer.
  *
  * @package Cik_Hybrid
  *
@@ -23,7 +23,7 @@ $args = wp_parse_args(
 $cik_hybrid_logo_id = (int) get_theme_mod( 'custom_logo' );
 ?>
 <div class="flex items-center <?php echo esc_attr( $args['class'] ); ?>">
-	<a class="flex items-center gap-3 text-xl font-bold tracking-tight text-ink no-underline hover:text-accent" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"<?php echo is_front_page() ? ' aria-current="page"' : ''; ?>>
+	<a class="flex items-center gap-3 font-display text-xl font-bold tracking-tight text-night-ink no-underline hover:text-brand-bright" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"<?php echo is_front_page() ? ' aria-current="page"' : ''; ?>>
 		<?php
 		if ( $cik_hybrid_logo_id ) {
 			// One link for logo and name; the image is decorative when the name is printed next to it.
@@ -32,7 +32,7 @@ $cik_hybrid_logo_id = (int) get_theme_mod( 'custom_logo' );
 				'medium',
 				false,
 				array(
-					'class' => 'custom-logo h-10 w-auto',
+					'class' => 'custom-logo h-14 w-auto',
 					'alt'   => $args['show_name'] ? '' : get_bloginfo( 'name' ),
 				)
 			);
