@@ -38,7 +38,7 @@ $categories  = 'post' === $card_post->post_type ? get_the_category( $card_post->
 $category    = ! empty( $categories ) ? $categories[0]->name : '';
 $with_image  = $args['show_image'] && has_post_thumbnail( $card_post );
 ?>
-<article <?php post_class( 'cik-card group relative flex flex-col overflow-hidden rounded-card bg-canvas text-ink shadow-card ring-1 ring-line/70 transition duration-300 hover:-translate-y-1 hover:shadow-xl', $card_post ); ?>>
+<article <?php post_class( 'cik-card group relative flex flex-col overflow-hidden rounded-card bg-canvas text-base leading-normal text-ink shadow-card ring-1 ring-line/70 transition duration-300 hover:-translate-y-1 hover:shadow-xl', $card_post ); ?>>
 	<?php if ( $with_image ) : ?>
 		<div class="relative aspect-[16/10] overflow-hidden bg-surface">
 			<?php
@@ -46,7 +46,7 @@ $with_image  = $args['show_image'] && has_post_thumbnail( $card_post );
 				$card_post,
 				'cik-hybrid-card',
 				array(
-					'class' => 'size-full object-cover transition-transform duration-500 group-hover:scale-105',
+					'class' => 'size-full rounded-none object-cover transition-transform duration-500 group-hover:scale-105',
 					'sizes' => '(min-width: 64rem) 24rem, (min-width: 40rem) 50vw, 100vw',
 				)
 			);
@@ -65,9 +65,9 @@ $with_image  = $args['show_image'] && has_post_thumbnail( $card_post );
 			<time datetime="<?php echo esc_attr( get_the_date( 'c', $card_post ) ); ?>"><?php echo esc_html( get_the_date( '', $card_post ) ); ?></time>
 		</p>
 
-		<<?php echo esc_attr( $heading_tag ); ?> class="text-xl leading-tight sm:text-2xl">
+		<<?php echo esc_attr( $heading_tag ); ?> class="mt-0 text-xl leading-tight font-bold sm:text-2xl">
 			<?php // The stretched link makes the whole card clickable while keeping one focusable element. ?>
-			<a class="text-ink no-underline after:absolute after:inset-0 hover:text-accent" href="<?php echo esc_url( $permalink ); ?>">
+			<a class="font-bold text-ink no-underline after:absolute after:inset-0 hover:text-accent" href="<?php echo esc_url( $permalink ); ?>">
 				<?php echo esc_html( get_the_title( $card_post ) ); ?>
 			</a>
 		</<?php echo esc_attr( $heading_tag ); ?>>
