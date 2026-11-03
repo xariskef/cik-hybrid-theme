@@ -17,7 +17,7 @@ while ( have_posts() ) :
 	?>
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<?php cik_hybrid_component( 'page-header', array( 'title' => get_the_title() ) ); ?>
-		<div class="cik-prose mt-10 px-4 sm:px-6 [&>*]:max-w-wide [&>.alignfull]:max-w-none">
+		<div class="cik-prose mt-14 px-4 sm:px-6 [&>*]:max-w-wide [&>.alignfull]:max-w-none">
 			<?php the_content(); ?>
 		</div>
 	</article>

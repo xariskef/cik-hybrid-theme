@@ -17,8 +17,8 @@ cik_hybrid_component(
 	)
 );
 ?>
-<div class="cik-container pt-10">
-	<div class="max-w-content"><?php get_search_form(); ?></div>
+<div class="cik-container pt-12">
+	<div class="max-w-2xl"><?php get_search_form(); ?></div>
 </div>
 <?php
 cik_hybrid_component(

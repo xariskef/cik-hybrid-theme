@@ -26,7 +26,7 @@ while ( have_posts() ) :
 			)
 		);
 		?>
-		<div class="cik-prose cik-container mt-12">
+		<div class="cik-prose cik-container pt-20 sm:pt-24">
 			<?php the_content(); ?>
 		</div>
 	</article>
