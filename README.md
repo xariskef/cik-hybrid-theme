@@ -16,17 +16,42 @@ mirrors the design tokens so the block editor matches the front end.
 
 - Template hierarchy: `front-page`, `home`, `index`, `single`, `page`, `archive`, `search`, `404`, `comments`,
   `searchform`, plus page templates *Full width* and *Landing page*.
-- Components in `components/` loaded with `cik_hybrid_component()`: button, card, product card, hero,
-  section heading, page header, post grid, pagination, breadcrumbs, icon, site logo.
+- Components in `components/` loaded with `cik_hybrid_component()`: button, card, product card, feature card,
+  CTA band, hero, section heading, page header, post grid, pagination, breadcrumbs, icon, site logo.
 - Vite 6 + Tailwind 4 pipeline with a Laravel-style `hot` file for the dev server and the Vite manifest in
   production.
 - React islands loader with two examples: an accessible `Slider` and `Tabs`.
 - Dynamic block `cik-hybrid/latest-posts` with a buildless editor script.
 - Accessible navigation: dropdown toggles with `aria-expanded`, mobile menu, Escape handling, no-JS fallback.
 - WooCommerce support (when active): page wrappers, header cart count via cart fragments, product card.
-- Theme settings (social links, footer text) from an ACF options page when available, otherwise the Customizer.
+- Theme settings (show the site name next to the logo, disable comments, social links, footer text) from an ACF
+  options page when available, otherwise the Customizer.
+- Comments are **off by default** (setting "Disable comments"): closed and hidden everywhere, the comments REST
+  routes, pingbacks and comment feeds removed. Untick the setting to get normal WordPress comments back.
+- A small "Theme by Cikefallinos" credit in the footer; filter `cik_hybrid_footer_credit` and return `''` to remove it.
 - PHPCS (WordPress Coding Standards), PHPUnit + Brain Monkey, Vitest and Playwright/wp-env test suites, and a
   GitHub Actions workflow that also builds a release zip on tags.
+
+## Design
+
+- **Look:** a dark floating header "island" over the page, full-bleed photo hero, pill buttons and pill eyebrow
+  badges, rounded cards with a category badge on the image, and full-width bands that alternate white, dark and
+  accent sections.
+- **Tokens** live in the `@theme` block of `src/css/app.css` and are mirrored in `theme.json`: neutrals, the brand
+  blue (`brand` for non-text accents, `accent`/`accent-strong` for text and buttons with white text, AA on
+  white), a `brand-tint` for badges, and a `night` scale for dark surfaces (`night-muted` is 7:1 on `night`).
+- **Fonts are self-hosted:** Bricolage Grotesque (headings) and Inter (body), variable `woff2` files from
+  `@fontsource-variable/*`, bundled by Vite. No requests to Google Fonts, so no visitor IP goes to a third party
+  (GDPR) and no extra DNS/TLS handshake. Only the Latin and Latin Extended subsets are declared for Bricolage
+  (plus Greek for Inter); `unicode-range` means a browser downloads a file only when the page uses those glyphs.
+- Headings use `"Bricolage Grotesque Variable", "Inter Variable", system-ui`, so scripts Bricolage doesn't cover
+  fall back to Inter glyph by glyph.
+- **Front page** sections all come from WordPress: hero = the static front page's title, excerpt and featured
+  image; then its content; feature cards = its child pages (filter `cik_hybrid_front_page_features`); latest
+  posts; the Slider island on a dark band whose photo is the posts page's featured image; topic tabs; products
+  (WooCommerce); and a call to action that links to the page with the slug `contact` when it exists (filter
+  `cik_hybrid_front_page_cta`). A section with no content is skipped.
+- A menu item with the CSS class `is-cta` is shown as the pill button of the header island.
 
 ## Requirements
 
@@ -66,9 +91,9 @@ Three layers, each answering a different question:
 
 | Suite | Tool | What it covers | Command |
 | --- | --- | --- | --- |
-| PHP unit | PHPUnit 9 + Brain Monkey | Vite hot file/manifest resolution, islands markup, settings (ACF or Customizer), block attribute validation, components. No WordPress, no database. | `composer test` |
+| PHP unit | PHPUnit 9 + Brain Monkey | Vite hot file/manifest resolution, islands markup, settings (ACF or Customizer, checkbox defaults), the comments switch, front page data, footer credit, block attribute validation, components. No WordPress, no database. | `composer test` |
 | JS unit | Vitest + Testing Library (jsdom) | Islands loader, `Slider` (URL filtering, autoplay, reduced motion, inert slides), `Tabs` (keyboard, ARIA), URL helpers. | `pnpm test` |
-| End to end | Playwright + wp-env | The latest WordPress with WooCommerce: every main template returns the right status without PHP notices or console errors, islands mount, the mobile menu works with the keyboard. | `pnpm test:e2e` |
+| End to end | Playwright + wp-env | The latest WordPress with WooCommerce: every main template returns the right status without PHP notices or console errors, islands mount, the mobile menu works with the keyboard, comments are off (no form, no comments REST route). | `pnpm test:e2e` |
 
 ```bash
 composer install && composer test            # or with Docker:
@@ -192,6 +217,9 @@ inc/
   navigation/          menu walker
   blocks.php           block registration
   settings.php         ACF options / Customizer
+  comments.php         "Disable comments" setting
+  front-page.php       data for the front page sections
+  template-tags.php    footer credit
   woocommerce.php      loaded only with WooCommerce
 page-templates/        Full width, Landing page
 src/
