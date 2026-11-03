@@ -79,9 +79,9 @@ function cik_hybrid_enqueue_vite_entry( string $entry ): bool {
 	$dev_url = cik_hybrid_vite_dev_url();
 
 	if ( null !== $dev_url ) {
-		wp_register_script_module( 'cik-hybrid/vite-client', $dev_url . '/@vite/client', array(), null );
+		wp_enqueue_script_module( 'cik-hybrid/vite-client', $dev_url . '/@vite/client', array(), null );
 		// In dev, Vite serves CSS entries as JS modules that inject the styles (with HMR).
-		wp_enqueue_script_module( 'cik-hybrid/' . $entry, $dev_url . '/' . $entry, array( 'cik-hybrid/vite-client' ), null );
+		wp_enqueue_script_module( 'cik-hybrid/' . $entry, $dev_url . '/' . $entry, array(), null );
 		return true;
 	}
 
