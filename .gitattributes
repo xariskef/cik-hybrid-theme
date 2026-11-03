@@ -19,3 +19,5 @@
 /phpcs.xml.dist export-ignore
 /tsconfig.json export-ignore
 /vite.config.ts export-ignore
+/AGENTS.md export-ignore
+/CLAUDE.md export-ignore

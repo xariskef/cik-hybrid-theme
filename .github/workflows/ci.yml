@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  php:
+    name: PHP lint and coding standards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+          coverage: none
+
+      - run: composer install --no-interaction --no-progress
+
+      - name: Syntax check
+        run: find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -print0 | xargs -0 -n1 php -l
+
+      - name: PHPCS
+        run: vendor/bin/phpcs
+
+  assets:
+    name: Typecheck and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm build
+
+      - uses: actions/upload-artifact@v4
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          name: dist
+          path: dist
+          # The manifest lives in dist/.vite/, which upload-artifact skips by default.
+          include-hidden-files: true
+
+  release:
+    name: Release zip
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [php, assets]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Package theme
+        run: |
+          mkdir -p build
+          # git archive honours export-ignore in .gitattributes (sources, tooling, CI).
+          git archive --format=tar --prefix=cik-hybrid-theme/ HEAD | tar -x -C build
+          cp -r dist build/cik-hybrid-theme/dist
+          test -f build/cik-hybrid-theme/dist/.vite/manifest.json
+          (cd build && zip -qr "../cik-hybrid-theme-${GITHUB_REF_NAME}.zip" cik-hybrid-theme)
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: cik-hybrid-theme-${{ github.ref_name }}.zip
